@@ -339,4 +339,46 @@ let nombre = persona[0]; // string
 let edad = persona[1];   // number
 ```
 
+# Ejercicios prácticos básicos
+## Ejercicio 1.
+Escribe una función en TypeScript que reciba como parámetro una nota numérica entre 0 y 10 e imprima un mensaje en pantalla según la calificación obtenida:
+- >=9: Sobresaliente
+- >=7: Notable
+- >=5: Aprobado
+- <5: Suspenso.
+## Ejercicio 2.
+Crea un programa en TypeScript que imprima en consola todos los números pares del 1 al 20. Usa un bucle for, while y do-while.
+## Ejercicio 3.
+1. Declara un array con al menos 3 nombres.
+2. Agrega dos nombres nuevos al final de la lista.
+3. Elimina el primer elemento del array.
+4. Comprueba si un nombre concreto (ejemplo "Ana") está en la lista.
+5. Recorre el array e imprime cada nombre en consola.
+## Ejercicio 4.
+Crea una tupla en TypeScript que contenga:
+- El nombre de un producto (string).
+- Su precio (number).
+Muestra el nombre y el precio por consola en el formato: 
+El producto nombre tiene un precio de precio euros.
+## Ejercicio 5.
+Define una función que reciba un array de números como parámetro y devuelva la suma total.
+Ejemplo: sumarArray([1, 2, 3, 4]) // devuelve 10
+
+## Ejercicio 6.
+Escribe una función que reciba un array de strings y devuelva un solo string concatenado, donde cada elemento esté separado por una coma y un espacio ", "
+Ejemplo: concatenar(["Ana", "Luis", "Pedro"]) // devuelve "Ana, Luis, Pedro"
+## Ejercicio 7.
+Crea un programa que reciba un número entre 1 y 7 e imprima el día de la semana correspondiente.
+## Ejercicio 8.
+Crea un array con varios números. Recorre el array con un for y detén la ejecución (break) cuando encuentres el número 7, mostrando un mensaje "Número encontrado".Si el número no existe en el array, mostrar "Número no encontrado".
+## Ejercicio 9.
+Escribe una función que reciba un array de números y devuelva el mayor de ellos.
+Ejemplo: mayorNumero([3, 8, 1, 10, 5]) // devuelve 10
+
+## Ejercicio 10
+Crea un array con varios números. Recorre el array con un bucle y para cada número imprime:
+- "Par" si es par.
+- "Impar" si es impar.
+Usa el operador ternario para la comprobación.
+
 # Funciones
