@@ -17,6 +17,55 @@
 
 # Sintaxis básica
 
+## Declaración de variables: let, var y const
+En TypeScript (igual que en JS), podemos declarar variables usando var, let o const. La diferencia principal está en ámbito (scope), redeclaración y mutabilidad.
+
+- var: tiene ámbito de función, no de bloque y permite redeclarar variables. Sufre hoisting (la declaración se sube al inicio de la función).
+
+- let: tiene ámbito de bloque  `{}`. No permite redeclarar variables en el mismo bloque. Puede modificarse pero no redeclararse.
+
+- const: tiene ámbito de bloque `{}` y no se puede reasignar una vez declarada. Debe inicializarse al ser declarada. 
+
+``` Typescript
+// --------- VAR ---------
+var nombreVar = "Ana";
+console.log(nombreVar); // Ana
+
+var nombreVar = "Luis"; // ✅ Se puede redeclarar
+console.log(nombreVar); // Luis
+
+if (true) {
+  var edadVar = 30;
+  console.log("Dentro del if:", edadVar); // 30
+}
+console.log("Fuera del if:", edadVar); // 30 → var ignora el bloque
+
+
+// --------- LET ---------
+
+let nombreLet = "Ana";
+// let nombreLet = "Luis"; // ❌ Error: no se puede redeclarar
+nombreLet = "Luis"; // ✅ Se puede reasignar
+console.log(nombreLet); // Luis
+
+if (true) {
+  let edadLet = 25;
+  console.log("Dentro del if:", edadLet); // 25
+}
+// console.log("Fuera del if:", edadLet); // ❌ Error: edadLet no existe fuera del bloque
+
+// --------- CONST ---------
+const PI = 3.1416;
+// PI = 3.14; // ❌ Error: no se puede reasignar
+
+const persona = { nombre: "Ana", edad: 25 };
+persona.nombre = "Luis"; // ✅ Se puede modificar el contenido del objeto
+console.log("Persona:", persona); // { nombre: 'Luis', edad: 25 }
+
+// persona = { nombre: "Luis", edad: 30 }; // ❌ Error: no se puede reasignar la referencia
+```
+
+
 ## Tipos de datos primitivos
 Typescript tiene tres tipos de datos primitivos `string`, `number` y `bolean`
 
@@ -63,6 +112,25 @@ if (typeof valor === "string") {
 
 
 - **void**: usado en funciones que no devuelven nada.
+
+## Concatenar cadenas
+Existen diferentes formas de concatenar cadenas de texto:
+
+- Usando el operador +
+- Usando plantilla de literales (template literals)
+
+```typescript
+const nombre = "Ana";
+const apellido = "García";
+
+let nombreCompleto = nombre + " " + apellido;
+console.log(nombreCompleto); // Ana García
+
+let nombreCompleto = `${nombre} ${apellido}`;
+console.log(nombreCompleto); // Ana García
+}
+```
+`
 
 
 ## Inferencia de tipos
@@ -382,3 +450,222 @@ Crea un array con varios números. Recorre el array con un bucle y para cada nú
 Usa el operador ternario para la comprobación.
 
 # Funciones
+
+Las funciones nos permitirán crear bloques de códigos reutilizables que realizará una función específica. En TypeScript existen diferentes tipos de funciones que podemos usar según nuestras necesidades. A continuación veremos cada una de ellas.
+
+## Funciones declaradas (Named Functions)
+Son las más clásicas y se definen con la palabra reservada *function*. En el siguiente ejemplo se puede apreciar cómo se está realizando una asignación de tipos a los parámetros de la función así como al tipo de dato que va a devolver.
+
+```typescript
+
+function sumar(a: number, b: number): number {
+  return a + b;
+}
+
+console.log(sumar(3, 4)); // 7
+
+```
+
+## Funciones anónimas (Anonymous Functions)
+Este tipo de funciones no tienen nombre, son asignadas a una variable. Son muy útiles para usarla como callbacks.
+
+```typescript
+
+function sumar(a: number, b: number): number {
+  return a + b;
+}
+
+console.log(sumar(3, 4)); // 7
+
+```
+Este tipo de funcionse NO tienen **hoisting**, es decir, deben de declararse antes de usarse, a diferencia de las funciones clásicas que no es necesario declararla antes de ser usadas. Veamos un ejemplo:
+
+```typescript
+
+// Llamamos a la función ANTES de declararla
+console.log(sumar(2, 3)); // 5
+
+function sumar(a: number, b: number): number {
+  return a + b;
+}
+
+
+// Error: Cannot access 'restar' before initialization
+console.log(restar(5, 3));
+
+const restar = (a: number, b: number): number => a - b;
+
+```
+En JavaScript y TypeScript el motor de ejecución mueve ciertas declaraciones al inicio del ámbito antes de ejecutar el código, lo que nos permitirá llamar a una función que ha sido declarada posteriormente. En cambio, tanto las funciones anónimas como las funciones arrow no permiten esto.
+
+
+## Funciones con parámetros opcionales o por defecto
+Las funciones permiten establecer algunos parámetros opcionales o definir valores por defecto en el caso de que no se indique ningún valor. 
+
+Es muy importante aclarar que los parámetros opcionales deben estar en la última posición.
+
+A continuación se muestra un ejemplo:
+
+
+```typescript
+
+//Función con un parámetro opcional.
+function saludar(nombre?: string): void {
+  console.log(`Hola ${nombre ?? "invitado"}`); // ?? solo reemplaza cuando el valor es null o undefined.
+  //console.log(`Hola ${nombre !== null && nombre !== undefined ? nombre : "invitado"}`);
+
+}
+
+saludar();       // Hola invitado
+saludar("Ana");  // Hola Ana
+
+// Función con un valor por defecto.
+function potencia(base: number, exponente: number = 2): number {
+  return base ** exponente;
+}
+console.log(potencia(3));    // 9 (3^2)
+console.log(potencia(3, 3)); // 27 (3^3)
+
+
+```
+## Funciones con parámetros de varios tipos
+Este tipo de funciones nos permitirán usar parámetros que admita varios tipos posibles de datos.
+
+```typescript
+
+function variosTipos (a: string | number){
+    if (typeof(a) == "string"){
+        console.log("a es un string");
+    } else{
+        console.log("a es un number");
+    }
+}
+variosTipos(1); // a es un number
+```
+
+## Funciones con un número variable de parámetros
+Mediante el uso de los carácteres `...` vamos a poder capturar varios parámetros de una función.
+
+```typescript
+
+function sumarTodos(...numeros: number[]): number {
+  return numeros.reduce((acc, n) => acc + n, 0);
+}
+
+console.log(sumarTodos(1, 2, 3, 4, 5)); // 15
+
+```
+
+## Funcionse flecha (Arrow functions)
+Las funciones flechas (o arrow functions) son una forma más corta y moderna de escribir funciones. Se les denomina así porque usan una flecha `=>`. Sirven para lo mismo que una función normal, pero tienen menos código y algunas diferencias importantes. 
+Una función flecha tiene la siguiente estructura: `(parametros) => {operaciones}`
+
+
+A continuación se muestra un ejemplo:
+
+```typescript
+
+// Forma tradicional
+
+function sumar(a: number, b: number): number {
+  return a + b;
+}
+
+// Función flecha 
+const sumar = (a: number, b: number): number => { return a + b; };
+```
+
+Si la función tiene una sola línea que devuelve un valor, se puede escribir sin return y sin llaves { }:
+
+```typescript
+const sumar = (a: number, b: number): number => a + b;
+```
+Este tipo de funciones son muy usadas en las funciones callbacks.
+
+## Funciones callback
+Las funciones callback son aquellas que serán pasadas como parámetro a otra función para que sea ejecutada en algún momento. Se usan cuando queremos que una función externa decida en qué momento ejeutar nuestro código. Son muy comunes en eventos, temporizadores y funciones para manejar arrays.
+
+A continuación se muestra un ejemplo de función callback:
+
+```typescript
+
+/* Esta función recibe como parámetro un nombre de tipo string y un parámetro llamado callback de tipo función, que debe tener una estructura concreta. 
+La función que se le pase como parámetro debe recibir un parámetro string y devolver void.*/
+
+function saludar(nombre: string, callback: (mensaje: string) => void) {
+  const texto = `Hola, ${nombre}`;
+  callback(texto); // aquí se llama a la función pasada como parámetro
+}
+
+// Usamos la función saludar pasando un callback
+saludar("Lucía", (msg) => {
+  console.log(msg);
+});
+
+// También se podría definir una función anónima y pasarla como parámetro.
+const funcion_callback = (msg) => { console.log(msg); }
+saludar("Lucía", funcion_callback);
+
+```
+
+Lo que está ocurriendo es lo siguiente:
+1. La función `saludar("Lucía",..)` crea el texto `Hola, Lucía`.
+2. En vez de imprimir dicho texto, se hace una llamada a la función pasada como parámetro.
+3. La función callback decide qué hacer con el texto, en este caso lo muestra por consola.
+
+A continuación se muestra otro ejemplo usando el método `foreach` en un array de datos:
+
+```typescript
+
+const numeros = [1, 2, 3];
+
+// forEach necesita un callback que diga qué hacer con cada número
+numeros.forEach((n) => {
+  console.log(n * 2);
+});
+
+// Otra forma de hacerlo sería usando una función anónima
+const operar =  (n) => { console.log(n * 2);}
+numeros.forEach(operar)
+
+```
+
+## Funciones asíncronas
+Las funciones asíncronas tiene como objetivo realizar operaciones complejas o que dependen de un servidor externo sin bloquear la ejecución del programa. Es decir, mientras se está ejecutando la función, el usuario puede seguir haciendo uso de la aplicación y cuando finalice la ejecución de la función asíncrona se le mostrará los resultados.
+
+Las funciones asíncronas se definen usando la palabra reservada `async` y dentro de una función asíncrona se puede usar la palabra reservada `await` que significa 'Espera a que esta línea se ejecute antes de seguir'.
+
+Toda función asíncrona devuelve una promesa. ¿Qué es una promesa?
+Una promesa es un objeto que representa un valor que aún no está disponible, pero que lo estará en el futuro. Las promesas:
+- Pueden cumplirse (resolve) -> todo salió bien
+- Pueden fallar (reject) -> hubo un error.
+
+Para poder obtener los datos de una función asíncrona debemos de invocarla y usar los métodos:
+- `.then()` para poder obtener el valor que devuelve la promesa. Recibe una función callback que se ejecuta cuando la promesa se cumple (resolve).
+- `.catch()` para manejar los errores si la promesa ha fallado (reject).
+
+```typescript
+async function obtenerUsuarios():Promise<JSON> {
+  // Con la función fetch se accede a la API mediante una peteición GET
+  const respuesta = await fetch("https://dog.ceo/api/breeds/image/random");
+  
+  //Convertimos la respuesta de la petición GET en JSON
+  const datos = await respuesta.json() as Promise<JSON>;
+
+  return datos;
+}
+
+async function obtenerUsuarios():Promise<JSON> {
+  // Con la función fetch se accede a la API mediante una peteición GET
+  const respuesta = await fetch("https://dog.ceo/api/breeds/image/random");
+  //Convertimos la respuesta de la petición GET en JSON
+  const datos = await respuesta.json() as Promise<JSON>;
+  
+  return datos
+}
+
+obtenerUsuarios()
+.then((res)=>{console.log(`Los datos obtenidos de la API son: ${res}`)})
+.catch((error)=>{console.log(`Error al ejecutar la función async: ${error}`)})
+```
+
