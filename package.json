@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start" : "nodemon",
-    "execute": "npm exec ts-node src/index.ts"
+    "execute": "npm exec ts-node src/index.ts",
+    "transpilar": "npm exec tsc"
   },
   "author": "",
   "license": "ISC",
