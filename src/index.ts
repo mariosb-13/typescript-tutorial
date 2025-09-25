@@ -7,4 +7,3 @@ console.log(x);
 
 
 var y;
-const z=2;
