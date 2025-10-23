@@ -6,6 +6,7 @@
 // console.log(x);
 
 import EventEmitter = require("events")
+import types = require("util/types");
 
 
 // var y;
@@ -182,12 +183,12 @@ let persona = {
     nombre: "Mario",
     apellido: "Sánchez",
     edad: "22",
-    direccion:{
-        calle:"Madrid",
-        numero:"22",
-        bloque:{
-            nombre:"Bloque A",
-            color:"Azul"
+    direccion: {
+        calle: "Madrid",
+        numero: "22",
+        bloque: {
+            nombre: "Bloque A",
+            color: "Azul"
         },
     }
     //esMayorEdad: function (): boolean { return this.edad >= 18 ? true : false }
@@ -198,34 +199,167 @@ console.log(persona.apellido);
 
 //TYPE
 // Es una plantilla que me va a permitir reutilizar código (interfaz)
-type PuestoTrabajo={
-    puestoTrabajo:string,
-    oficina:string
+type PuestoTrabajo = {
+    puestoTrabajo: string,
+    oficina: string
 }
 
-type Usuario={
-    readonly id:number,
-    username:string,
-    email:string,
-    estaActivo:boolean,
-    profileURL?:string
+type IdTemplate = `uid-${number}`
+
+
+type UserId = IdTemplate | number;
+
+type Usuario = {
+    readonly id: number,
+    username: string,
+    email: string,
+    estaActivo: boolean,
+    profileURL?: string
 }
 
-type Empleado= Usuario & PuestoTrabajo;
+type Empleado = Usuario & PuestoTrabajo;
 
 
-let user1:Usuario={
-    id:1,
-    username:"mariosb13",
-    email:"mario@example.com",
-    estaActivo:true,
+let user1: Usuario = {
+    id: 1,
+    username: "mariosb13",
+    email: "mario@example.com",
+    estaActivo: true,
 }
 
 //No deja modificar el parámetro id ya que es readonly
 //user1.id=2;
 
-console.log(user1.profileURL?.toUpperCase)
+// console.log(user1.profileURL?.toUpperCase)
 
-type Saludo = `Hola ${string}`
+// type Saludo = `Hola ${string}`
 
-let mensaje1:Saludo = "Hola Mario"
+// let mensaje1: Saludo = "Hola Mario"
+
+// //UNIONES |
+
+// type Entidad = 'USUARIO' | 'PRODUCTO'
+// type Accion = 'CREAR' | 'MODIFICAR' | 'BORRAR' | 'LISTAR'
+// type Permisos = `${Entidad}_${Accion}`
+
+// let permisos1: Permisos = "USUARIO_LISTAR"
+
+// console.log(permisos1)
+
+// type TDireccion = 'ESTE' | 'SUR' | 'NORTE' | 'OESTE'
+
+// enum Direccion {
+//     Norte = 1,
+//     Sur = 2,
+//     Este = 3,
+//     Oeste = 4
+// }
+// let d1: TDireccion = "NORTE"
+// let d2: Direccion = Direccion.Este
+
+// type EstadoTicket = 'Urgente' | 'Abierto' | 'EnProceso' | 'Cerrado'
+
+// type Ticket={
+//     nombre:string,
+//     estado:EstadoTicket
+// }
+
+// let ticket = {
+//     nombre: 'Ticket 1',
+//     estado:'Abierto'
+// }
+
+// //OBJETO SE RECUPERA DE LA BASE DE DATOS
+// // ESTADO -> 0
+// let estadoTicket =0
+// switch () {
+//     case 0:
+//         console.log('Ticket Abierto')
+//         break;
+//     case 1:
+//         console.log('Ticket en Proceso')
+//         break;
+//     case 2:
+//         console.log('Ticket Cerrado')
+//         break;
+//     default:
+//         break;
+// }
+
+
+type IdCoche = `id-coche-${number}`
+//INTERFACES
+interface Vehiculo {
+    idCoche: IdCoche
+    marca: string,
+    modelo: string,
+    anio: number,
+}
+
+//CREACION DE OBJETOS
+let miVehiculo: Vehiculo = {
+    etiquetaEco: true,
+    idCoche: 'id-coche-1',
+    marca: 'Seat',
+    modelo: 'Ibiza',
+    anio: 2010,
+}
+
+//Se pueden mergear interfaces (Mezclar)
+interface Vehiculo {
+    etiquetaEco: boolean
+}
+
+
+interface Coche extends Vehiculo {
+    tamVolante: number
+}
+
+interface Moto extends Vehiculo {
+    tamManillar: number
+}
+
+interface OperacionMatematica {
+    (a: number, b: number): number;
+}
+
+const suma: OperacionMatematica = (a: number, b: number) => a + b;
+const resta: OperacionMatematica = (a: number, b: number) => { return a - b };
+const multiplica: OperacionMatematica = function (a: number, b: number) { return a * b }
+const divide: OperacionMatematica = (a: number) => a / 2;
+
+class Persona {
+    constructor(public nombre: string, public apellidos: string, public edad: number) { };
+}
+
+interface IJugador{
+    sueldo:number,
+    alias:string,
+    estaActivo:boolean,
+    equipo?:string | undefined
+}
+
+class Jugador extends Persona{
+    //Propiedades
+    // nombre:string;
+    // estaActivo:boolean;
+    // equipo?:string|undefined;
+
+    // constructor (nombre:string,estaActivo:boolean,equipo?:string){
+    //     this.nombre=nombre
+    //     this.estaActivo=estaActivo
+    //     this.equipo=equipo;
+    // }
+
+    constructor(nombre: string, apellidos: string, edad: number, public alias: string, public estaActivo: boolean, public equipo?: string) {
+        super(nombre, apellidos, edad);
+    };
+
+    muestraInformacion() {
+        console.log(`El nombre es ${this.alias} y su estado es ${this.estaActivo}`)
+    }
+}
+
+let j1 = new Jugador('Peluca','Luca Modric',12,'luquita', false)
+
+j1.muestraInformacion()
