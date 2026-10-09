@@ -78,7 +78,7 @@ console.log("último      ->", anumeros[anumeros.length - 1]); // -1 porque los 
 console.log("fuera de rango ->", anumeros[anumeros.length]); // undefined
 
 // ---------- Buscar ----------
-const frutas = ["manzana", "pera", "platano", "mandarina", "manzana", "platano"];
+const frutas = ["manzana", "pera", "platano", "mandarina", "platano"];
 
 console.log("indexOf('platano') ->", frutas.indexOf("platano")); // primera posición, o -1
 console.log("includes('pera')   ->", frutas.includes("pera")); // true / false
@@ -124,4 +124,62 @@ console.log("sort  ->", [...numerosEnteros].sort((a, b) => a - b));
 console.log("slice ->", miNombre.slice(0, 2)); // copia un trozo, no modifica
 console.log("join  ->", numeros.join(" ")); // array -> string
 
-export {};
+export { };
+
+
+//////////////////////////////////
+
+let array: number[] = [1, 2, 3, 4, 5];
+// Array de varios tipos (union type)
+let array2: (string | number)[] = [1, 2, "tres", 4, "cinco"];
+
+
+array.push(6); // Añadir al final
+array.unshift(0); // Añadir al principio
+array.pop(); // Eliminar del final
+array.shift(); // Eliminar del principio
+
+console.log(array[0]); // Imprimir el primer elemento
+
+console.log(array.length); // Imprimir la longitud del array
+
+console.log(array.indexOf(4)); // Imprimir la posición del elemento 4
+
+console.log(array.includes(3)); // Comprobar si el array incluye el elemento 3
+
+//indexof
+//find
+
+console.log(frutas.find((valor: string) => { return valor.length > 5 }));
+console.log(frutas.filter((valor: string) => { return valor.includes("ma") }));
+//map
+//foreach
+//reduce
+
+let notas = [4, 5, 8.7, 9, 10, 0, 1.5];
+
+let numeroAprobados: number = notas.filter((valor: number) => { return valor >= 5 }).length;
+
+console.log(`Número de aprobados: ${numeroAprobados}`);
+
+
+let numeros6 = [1, 2, 3]
+
+let suma= numeros6.reduce((acumulador: number, valorActual: number) => { return acumulador + valorActual }, 0);
+
+/**
+ * function fSuma(array:number[]):number{
+ *  let acc=0
+ *   for (const n of numeros){
+ *     acumulador+=n
+ *   }
+ * return acc;
+ * }
+ */
+
+
+let numerosRandom =[-61, 4, 51, 9, 800, 1, 4, 44];
+
+let extraerGrande= numerosRandom.reduce((acumulador: number, valorActual: number) => { return (valorActual>acumulador)? valorActual:acumulador });
+
+console.log(`El número más grande es: ${extraerGrande}`);

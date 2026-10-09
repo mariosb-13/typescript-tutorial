@@ -1,67 +1,80 @@
+let texto: string = "Mario!";
+let numero: number = 42;
+let numeroFloat: number = 42.4;
+
+let booleano: boolean = true;
+
+let cualquier: any = "Esto puede ser cualquier cosa";
+let desconocido: unknown = "Esto es un valor desconocido";
+
+let nulo: null = null;
+
+//Se utiliza para indicar que una variable puede ser de un tipo o nula, por ejemplo:
+let hola: string | null = null;
+let adios: string | undefined = undefined;
+
+if (typeof desconocido === "string") {
+  console.log(desconocido.toUpperCase());
+}
+
+let nada: void = undefined;
+
+function saludo(): void {
+  console.log("¡Hola!");
+}
+
+
 /**
- * 02 - TIPOS DE DATOS
- *
- * Ejecutar:  npm run play -- src/02-tipos-datos/demo.ts
+ * Función que nunca termina
  */
-
-// ---------- Primitivos ----------
-let nombre: string = "Carlos Mendoza";
-let edad: number = 18.2; // number cubre enteros y decimales
-let mayorEdad: boolean = true;
-
-console.log(nombre, edad, mayorEdad);
-
-// ---------- Inferencia ----------
-// Si inicializas al declarar, NO hace falta anotar el tipo: TS lo deduce.
-let ciudad = "Sevilla"; // inferido: string
-// ciudad = 3;          // Error: Type 'number' is not assignable to type 'string'.
-console.log(`ciudad inferida como string -> ${ciudad}`);
-
-// ---------- any: desactiva el chequeo ----------
-let cualquierCosa: any = "Hola";
-cualquierCosa = 2;
-cualquierCosa = true;
-cualquierCosa = "HOLA";
-
-// Compila, pero si el valor no fuese string reventaría en EJECUCIÓN.
-// `any` es una puerta trasera: evítalo.
-console.log(cualquierCosa.toLowerCase());
-
-// ---------- unknown: el "any seguro" ----------
-let tipoDatoDesconocido: unknown;
-
-tipoDatoDesconocido = "Nombre";
-tipoDatoDesconocido = 18;
-tipoDatoDesconocido = "Ahora soy texto";
-
-// console.log(tipoDatoDesconocido.toUpperCase());  // Error: 'tipoDatoDesconocido' is of type 'unknown'.
-
-// Hay que comprobar el tipo antes de usarlo (type guard / narrowing):
-if (typeof tipoDatoDesconocido === "string") {
-  console.log(tipoDatoDesconocido.toUpperCase()); // aquí TS ya sabe que es string
+function nuncaAcaba(): never {
+  while (true) { }
 }
 
-// ---------- void y never ----------
-// void: la función no devuelve nada.
-function avisar(mensaje: string): void {
-  console.log(`AVISO: ${mensaje}`);
-}
-avisar("void = sin valor de retorno");
+console.log("Hola" + texto);
+console.log(`Hola + ${texto}`);
 
-// never: la función nunca termina normalmente (lanza o bucle infinito).
-function lanzarError(msg: string): never {
-  throw new Error(msg);
+interface Usuario {
+  nombre: string;
+  edad?: number;
+  dni: string;
 }
 
-// ---------- null y undefined ----------
-// Con "strict": true hay que declararlos explícitamente en el tipo.
-let apellido: string | null = null;
-apellido = "García";
-console.log(`apellido -> ${apellido}`);
+let usuario1: Usuario = {
+  nombre: "Mario",
+  dni: "12345678A"
+}
 
-// ---------- Concatenar cadenas ----------
-console.log("Tu nombre es: " + nombre); // concatenación clásica
-console.log(`Tu nombre es ${nombre}`); // template literal (preferido)
-console.log(`El año que viene tendrás ${Math.floor(edad) + 1} años`);
+let usuario2: Usuario = {
+  nombre: "Juan",
+  edad: 12,
+  dni: "12345678A"
+}
 
-export {};
+console.log(`Edad de Juan: ${usuario2.edad}`);
+console.log(`Edad de Mario: ${usuario1.edad ?? "No especificada"}`);
+// ?? -> undefined o null
+
+console.log(`Edad de Mario: ${usuario1.edad || "No especificada"}`);
+// || -> undefined, null, cadena vacía, 0, false, NaN
+
+//operador ternario
+console.log(`Juan es ${usuario2.edad! > 18 ? `mayor de edad` : `menor de edad`}`);
+
+//operador propagación
+let numeros: number[] = [1, 2, 3];
+let numeros2: number[] = [...numeros, 4, 5, 6];
+
+let [primero, segundo] = numeros2;
+
+console.log(`Números 1: ${numeros}`);
+console.log(`Números 2: ${numeros2}`);
+console.log(`Primer número: ${primero}`);
+console.log(`Segundo número: ${segundo}`);
+
+
+let p1 = {nombre: "Mario", edad: 30};
+let {nombre: nombreP1, edad: edadP1} = p1;
+
+console.log(`Nombre: ${nombreP1}`);
+console.log(`Edad: ${edadP1}`);
