@@ -6,21 +6,31 @@
 
 // ---------- Declaración e instanciación ----------
 class Coche {
-  marca: string;
-  modelo: string;
+  constructor(public modelo: string, public marca: string, private kilometros: number, protected color?: string) { }
 
-  constructor(marca: string, modelo: string) {
-    this.marca = marca;
-    this.modelo = modelo;
+  conducir(){
+    this.kilometros++
   }
 
   describir(): string {
     return `${this.marca} ${this.modelo}`;
   }
-}
 
-const coche = new Coche("Seat", "Ibiza");
-console.log("describir ->", coche.describir());
+  
+  public get getMarca() : string {
+    return this.marca
+  }
+  
+  
+  public set setMarca(v : string) {
+    this.marca = v;
+  }
+  
+}
+let c1 = new Coche("Toledo", "Seat", 220000,"Rojo")
+c1.modelo
+c1.describir()
+c1.getMarca
 
 // ---------- Atajo del constructor (parameter properties) ----------
 // Declara y asigna la propiedad en un solo paso. Es lo que verás en los
@@ -30,7 +40,7 @@ class Moto {
     public marca: string,
     public cilindrada: number,
     private readonly bastidor: string = "VF1-000",
-  ) {}
+  ) { }
 
   ficha(): string {
     return `${this.marca} ${this.cilindrada}cc (bastidor ${this.bastidor})`;
@@ -105,7 +115,7 @@ console.log("static ->", Matematicas.areaCirculo(2)); // sin `new`
 
 // ---------- Herencia ----------
 class Vehiculo {
-  constructor(public marca: string) {}
+  constructor(public marca: string) { }
 
   arrancar(): string {
     return `${this.marca} arrancando`;
@@ -140,7 +150,7 @@ class Factura implements Imprimible, Serializable {
   constructor(
     private numero: string,
     private importe: number,
-  ) {}
+  ) { }
 
   imprimir(): void {
     console.log(`Factura ${this.numero}: ${this.importe} €`);
@@ -158,7 +168,7 @@ console.log("aJson ->", factura.aJson());
 // ---------- Clases abstractas ----------
 // No se pueden instanciar: sirven de plantilla para sus hijas.
 abstract class Figura {
-  constructor(public nombre: string) {}
+  constructor(public nombre: string) { }
 
   abstract area(): number; // sin cuerpo: la hija está OBLIGADA a implementarlo
 
@@ -196,4 +206,4 @@ class Rectangulo extends Figura {
 const figuras: Figura[] = [new Circulo(3), new Rectangulo(4, 5)];
 figuras.forEach((f) => console.log("polimorfismo ->", f.describir()));
 
-export {};
+export { };
