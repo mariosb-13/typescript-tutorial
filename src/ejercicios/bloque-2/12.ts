@@ -60,7 +60,7 @@ try {
     ana.anadirNota(15);
 } catch (error) {
     if (error instanceof Error) {
-        console.log(`Rechazado -> ${error.message}`);
+        console.log(`Rechazado  -> ${error.message}`);
     } else {
         throw error;
     }
