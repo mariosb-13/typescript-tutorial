@@ -149,7 +149,7 @@ GestionTaller.registrar("Marta", "Pixel 7", 80, false)
 console.log(GestionTaller.listar())
 
 console.log(`Cambiar #1 a Entregada -> ${GestionTaller.cambiarEstado(1,"Entregada")}`)
-console.log(`Cambiar #2 a En reparacion -> ${GestionTaller.cambiarEstado(1,"En reparacion")}`)
+console.log(`Cambiar #2 a En reparacion -> ${GestionTaller.cambiarEstado(2,"En reparacion")}`)
 console.log(`Cambiar #9 a terminada -> ${GestionTaller.cambiarEstado(9,"Terminada")}`)
 
 //GestionTaller.cambiarEstado(2,"Perdida");
