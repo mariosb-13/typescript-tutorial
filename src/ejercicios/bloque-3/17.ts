@@ -1,6 +1,6 @@
 import { log } from "console";
 
-export {}
+export { }
 interface TareaApi {
     userId: number,
     id: number,
@@ -61,6 +61,8 @@ obtenerTareas(1).then((tarea: Tarea[]) => {
 
 //el await funciona gracias a export{}
 let datos = await Promise.all([obtenerTareas(1), obtenerTareas(2)]);
-
 console.log(datos);
 
+//Sin el await tendria que ser asi
+let datosSinAwait = Promise.all([obtenerTareas(1), obtenerTareas(2)]);
+datosSinAwait.then((datos) => { datos.forEach((tareaUsuario) => { console.log(`Tareas del usuario ${tareaUsuario}`) }) }).catch()
